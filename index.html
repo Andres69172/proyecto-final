@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Biblioteca de Videojuegos</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-gamepad"></i> Mi Biblioteca de Videojuegos</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active" id="nav-home">Inicio</a></li>
+                    <li><a href="#" id="nav-add-game">Agregar Juego</a></li>
+                    <li><a href="#" id="nav-reviews">Reseñas</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Sección de inicio - Lista de juegos -->
+        <section id="home-section" class="section active">
+            <h2>Mi Colección de Juegos</h2>
+            <div class="search-bar">
+                <input type="text" id="search-games" placeholder="Buscar juegos...">
+                <button id="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="filter-options">
+                <select id="filter-platform">
+                    <option value="">Todas las plataformas</option>
+                    <option value="PC">PC</option>
+                    <option value="PlayStation">PlayStation</option>
+                    <option value="Xbox">Xbox</option>
+                    <option value="Nintendo">Nintendo</option>
+                    <option value="Móvil">Móvil</option>
+                </select>
+                <select id="filter-genre">
+                    <option value="">Todos los géneros</option>
+                    <option value="Acción">Acción</option>
+                    <option value="Aventura">Aventura</option>
+                    <option value="RPG">RPG</option>
+                    <option value="Estrategia">Estrategia</option>
+                    <option value="Deportes">Deportes</option>
+                    <option value="Simulación">Simulación</option>
+                </select>
+                <select id="sort-by">
+                    <option value="title">Ordenar por título</option>
+                    <option value="rating">Ordenar por calificación</option>
+                    <option value="releaseDate">Ordenar por fecha</option>
+                </select>
+            </div>
+            <div id="games-container" class="games-grid">
+                <!-- Los juegos se cargarán dinámicamente aquí -->
+            </div>
+        </section>
+
+        <!-- Sección para agregar juegos -->
+        <section id="add-game-section" class="section">
+            <h2>Agregar Nuevo Juego</h2>
+            <form id="add-game-form">
+                <div class="form-group">
+                    <label for="game-title">Título:</label>
+                    <input type="text" id="game-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="game-platform">Plataforma:</label>
+                    <select id="game-platform" required>
+                        <option value="">Selecciona una plataforma</option>
+                        <option value="PC">PC</option>
+                        <option value="PlayStation">PlayStation</option>
+                        <option value="Xbox">Xbox</option>
+                        <option value="Nintendo">Nintendo</option>
+                        <option value="Móvil">Móvil</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="game-genre">Género:</label>
+                    <select id="game-genre" required>
+                        <option value="">Selecciona un género</option>
+                        <option value="Acción">Acción</option>
+                        <option value="Aventura">Aventura</option>
+                        <option value="RPG">RPG</option>
+                        <option value="Estrategia">Estrategia</option>
+                        <option value="Deportes">Deportes</option>
+                        <option value="Simulación">Simulación</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="game-release-date">Fecha de lanzamiento:</label>
+                    <input type="date" id="game-release-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="game-image">URL de la imagen:</label>
+                    <input type="url" id="game-image" placeholder="https://ejemplo.com/imagen.jpg">
+                </div>
+                <div class="form-group">
+                    <label for="game-description">Descripción:</label>
+                    <textarea id="game-description" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="game-rating">Calificación:</label>
+                    <div class="rating-input">
+                        <i class="far fa-star" data-rating="1"></i>
+                        <i class="far fa-star" data-rating="2"></i>
+                        <i class="far fa-star" data-rating="3"></i>
+                        <i class="far fa-star" data-rating="4"></i>
+                        <i class="far fa-star" data-rating="5"></i>
+                    </div>
+                    <input type="hidden" id="game-rating" value="0">
+                </div>
+                <button type="submit" class="btn-primary">Guardar Juego</button>
+            </form>
+        </section>
+
+        <!-- Sección de reseñas -->
+        <section id="reviews-section" class="section">
+            <h2>Reseñas de Juegos</h2>
+            <div class="reviews-container">
+                <!-- Las reseñas se cargarán dinámicamente aquí -->
+            </div>
+            <div class="add-review-container">
+                <h3>Agregar Nueva Reseña</h3>
+                <form id="add-review-form">
+                    <div class="form-group">
+                        <label for="review-game">Juego:</label>
+                        <select id="review-game" required>
+                            <option value="">Selecciona un juego</option>
+                            <!-- Las opciones se cargarán dinámicamente -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="review-rating">Calificación:</label>
+                        <div class="rating-input">
+                            <i class="far fa-star" data-rating="1"></i>
+                            <i class="far fa-star" data-rating="2"></i>
+                            <i class="far fa-star" data-rating="3"></i>
+                            <i class="far fa-star" data-rating="4"></i>
+                            <i class="far fa-star" data-rating="5"></i>
+                        </div>
+                        <input type="hidden" id="review-rating" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="review-text">Tu reseña:</label>
+                        <textarea id="review-text" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Publicar Reseña</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Modal para ver detalles del juego -->
+        <div id="game-details-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div id="game-details-content">
+                    <!-- El contenido del modal se cargará dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Mi Biblioteca de Videojuegos</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
