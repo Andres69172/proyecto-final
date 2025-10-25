@@ -2,19 +2,34 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const TarjetaJuego = ({ juego }) => {
+  const { _id, title, platform, image, rating, genre, releaseDate } = juego;
+  
+  // Imagen por defecto si no hay una disponible
+  const imagenUrl = image || 'https://via.placeholder.com/150?text=Sin+Imagen';
+  
+  // Formatear fecha de lanzamiento
+  const fechaFormateada = releaseDate ? new Date(releaseDate).toLocaleDateString() : 'Desconocida';
+
   return (
-    <div className="juego-card">
-      <img 
-        src={juego.image || 'https://via.placeholder.com/300x180?text=Sin+Imagen'} 
-        alt={juego.title} 
-      />
-      <div className="juego-card-content">
-        <h3>{juego.title}</h3>
-        <p>{juego.platform}</p>
-        <p className="rating">★ {juego.rating || 'Sin calificación'}</p>
-        <div className="actions">
-          <Link to={`/juego/${juego._id}`} className="btn">Ver Detalles</Link>
-          <Link to={`/juego/editar/${juego._id}`} className="btn btn-secondary">Editar</Link>
+    <div className="tarjeta-juego">
+      <div className="tarjeta-imagen">
+        <img src={imagenUrl} alt={title} />
+        <div className="tarjeta-genero">{genre}</div>
+      </div>
+      
+      <div className="tarjeta-contenido">
+        <h3>{title}</h3>
+        <p className="plataforma">{platform}</p>
+        <p className="fecha-lanzamiento">Lanzamiento: {fechaFormateada}</p>
+        
+        <div className="tarjeta-rating">
+          <span className="estrellas">{'★'.repeat(Math.round(rating))}</span>
+          <span className="rating-numero">{rating.toFixed(1)}</span>
+        </div>
+        
+        <div className="tarjeta-acciones">
+          <Link to={`/juegos/${_id}`} className="btn btn-ver">Ver detalles</Link>
+          <Link to={`/juegos/editar/${_id}`} className="btn btn-editar">Editar</Link>
         </div>
       </div>
     </div>
