@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
 import { Pie, Bar } from 'react-chartjs-2';
 
 // Registrar componentes de Chart.js
@@ -10,19 +10,24 @@ const EstadisticasPersonales = () => {
   const [juegos, setJuegos] = useState([]);
   const [resenas, setResenas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [tipoGrafico, setTipoGrafico] = useState('genero'); // genero, plataforma, calificacion
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const juegosRes = await axios.get('/api/games');
-        const resenasRes = await axios.get('/api/reviews');
+        const [juegosRes, resenasRes] = await Promise.all([
+          axios.get('http://localhost:5000/api/games'),
+          axios.get('http://localhost:5000/api/reviews')
+        ]);
         
         setJuegos(juegosRes.data);
         setResenas(resenasRes.data);
         setLoading(false);
       } catch (err) {
-        console.error('Error al cargar datos:', err);
+        setError('Error al cargar los datos');
         setLoading(false);
+        console.error(err);
       }
     };
 
