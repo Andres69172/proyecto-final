@@ -1,9 +1,12 @@
 :root {
-  --primary-color: #2c3e50;
-  --secondary-color: #3498db;
-  --accent-color: #e74c3c;
-  --light-color: #ecf0f1;
-  --dark-color: #34495e;
+  /* Paleta refinada - look profesional y moderno */
+  --primary-color: #0f1724;    /* azul muy oscuro / casi negro */
+  --secondary-color: #0f74ff;  /* azul brillante para CTAs */
+  --accent-color: #00bcd4;     /* cian/acento */
+  --muted-color: #6b7280;      /* texto secundario */
+  --light-bg: #f7f9fb;         /* fondo general claro */
+  --card-bg: #ffffff;          /* fondo cartas */
+  --glass: rgba(15,23,36,0.04);
 }
 
 * {
@@ -13,15 +16,15 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: Inter, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
-  background-color: #f4f4f4;
-  color: #333;
+  background-color: var(--light-bg);
+  color: var(--primary-color);
 }
 
 .container {
   max-width: 1200px;
-  margin: 2rem auto;
+  margin: 2.25rem auto;
   padding: 0 1rem;
 }
 
@@ -30,9 +33,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: var(--primary-color);
+  gap: 1rem;
+  padding: 0.9rem 1.25rem;
+  background: linear-gradient(90deg, rgba(15,23,36,0.95), rgba(15,23,36,0.98));
   color: #fff;
+  border-bottom: 1px solid var(--glass);
 }
 
 .navbar h1 {
@@ -54,26 +59,58 @@ body {
   font-weight: bold;
 }
 
-.navbar a:hover {
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand .logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+  box-shadow: 0 4px 14px rgba(15,116,255,0.12);
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: rgba(255,255,255,0.92);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.nav-links a:hover {
+  background: rgba(255,255,255,0.03);
   color: var(--secondary-color);
 }
 
-/* Biblioteca de Juegos */
-.juegos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+.nav-cta {
+  background: var(--secondary-color);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(15,116,255,0.12);
 }
 
-/* Tarjeta de Juego */
-.juego-card {
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-}
+.nav-cta:hover { opacity: 0.95; }
 
 .juego-card:hover {
   transform: translateY(-5px);
@@ -91,11 +128,11 @@ body {
 
 .juego-card h3 {
   margin-bottom: 0.5rem;
-  color: var(--dark-color);
+  color: var(--primary-color);
 }
 
 .juego-card p {
-  color: #666;
+  color: var(--muted-color);
   margin-bottom: 0.5rem;
 }
 
@@ -187,7 +224,7 @@ body {
 
 .juego-info h2 {
   margin-bottom: 1rem;
-  color: var(--dark-color);
+  color: var(--primary-color);
 }
 
 .juego-info p {
@@ -201,7 +238,7 @@ body {
 }
 
 .juego-meta span {
-  background: var(--light-color);
+  background: var(--glass);
   padding: 0.3rem 0.8rem;
   border-radius: 20px;
   font-size: 0.9rem;
@@ -213,10 +250,11 @@ body {
 }
 
 .resena {
-  background: var(--light-color);
+  background: var(--card-bg);
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 1rem;
+  box-shadow: 0 2px 6px rgba(15,23,36,0.04);
 }
 
 .resena-header {
@@ -250,7 +288,7 @@ body {
 
 .stat-card h3 {
   margin-bottom: 1rem;
-  color: var(--dark-color);
+  color: var(--primary-color);
 }
 
 .chart-container {

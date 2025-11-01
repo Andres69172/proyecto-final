@@ -1,0 +1,149 @@
+.card {
+ display: flex;
+ flex-direction: column;
+ background: linear-gradient(180deg, #ffffff 0%, #f7f9fb 100%);
+ border-radius: 12px;
+ overflow: hidden;
+ box-shadow: 0 6px 18px rgba(20, 32, 50, 0.08);
+ transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.card:hover {
+ transform: translateY(-6px);
+ box-shadow: 0 14px 30px rgba(20, 32, 50, 0.14);
+}
+
+.imageContainer {
+ position: relative;
+ width: 100%;
+ height: 190px;
+
+  overflow: hidden;
+  background: #ddd; 
+}
+
+.platformBadge {
+ position: absolute;
+ top: 1rem;
+ right: 1rem;
+ background: rgba(255, 255, 255, 0.95);
+ color: #000;
+ padding: 0.5rem 1rem;
+ border-radius: 20px;
+ font-size: 0.875rem;
+ backdrop-filter: blur(4px);
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ font-weight: 500;
+ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ transition: transform 0.2s ease;
+}
+
+.platformBadge:hover {
+ transform: scale(1.05);
+}
+
+.portada {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ display: block;
+}
+
+.genreBadge {
+ position: absolute;
+ left: 12px;
+ bottom: 12px;
+ background: rgba(0, 188, 212, 0.95);
+ color: white;
+ padding: 6px 10px;
+ border-radius: 999px;
+ font-size: 0.85rem;
+ font-weight: 600;
+ box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.content {
+ padding: 14px 16px 18px 16px;
+ display: flex;
+ flex-direction: column;
+ gap: 8px;
+}
+
+.title {
+ font-size: 1.1rem;
+ line-height: 1.25;
+ color: #132033;
+ margin: 0;
+ font-weight: 700;
+}
+
+.platform {
+ color: #5b6b7a;
+ font-size: 0.95rem;
+}
+
+.date {
+ font-size: 0.85rem;
+ color: #7b8a97;
+}
+
+.rating {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ margin-top: 6px;
+}
+
+.stars {
+ color: #ffb400; 
+ font-size: 1.05rem;
+}
+
+.ratingNumber {
+ background: rgba(19, 32, 51, 0.05);
+ color: #132033;
+ font-weight: 700;
+ padding: 4px 8px;
+ border-radius: 6px;
+ font-size: 0.9rem;
+}
+
+.actions {
+ display: flex;
+ gap: 8px;
+ margin-top: 10px;
+}
+
+.btn {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ padding: 8px 12px;
+ border-radius: 8px;
+ font-weight: 600;
+ text-decoration: none;
+ cursor: pointer;
+ border: none;
+ transition: background-color 0.18s ease, transform 0.12s ease;
+ font-size: 0.95rem;
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btnView {
+ background: linear-gradient(90deg, #0f74ff 0%, #0fb1ff 100%);
+ color: white;
+}
+
+.btnEdit {
+ background: #f1f5f9;
+ color: #132033;
+ border: 1px solid rgba(19,32,51,0.06);
+}
+
+
+@media (min-width: 900px) {
+ .card { height: 100%; }
+}

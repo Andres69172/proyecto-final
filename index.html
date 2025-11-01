@@ -4,32 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Biblioteca de Videojuegos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1><i class="fas fa-gamepad"></i> Mi Biblioteca de Videojuegos</h1>
-            <nav>
+            <div class="navbar-left">
+                <h1><i class="fas fa-gamepad"></i> Mi Biblioteca de Videojuegos</h1>
+            </div>
+            <div class="navbar-right">
+                <div class="user-info" id="user-info">
+                    <img src="https://i.pravatar.cc/40?u=usuario" alt="Avatar usuario" class="avatar" id="avatar-img" />
+                    <span class="username" id="username">Andrés Mejía</span>
+                </div>
+    <!-- Modal para editar usuario -->
+    <div id="user-modal" class="modal" style="display:none;">
+        <div class="modal-content" style="max-width:400px;">
+            <span class="close-modal" id="close-user-modal">&times;</span>
+            <h3>Editar perfil</h3>
+            <form id="user-form">
+                <div class="form-group">
+                    <label for="edit-username">Nombre:</label>
+                    <input type="text" id="edit-username" required />
+                </div>
+                <div class="form-group">
+                    <label for="edit-avatar">URL de avatar:</label>
+                    <input type="url" id="edit-avatar" placeholder="https://i.pravatar.cc/40?u=usuario" />
+                </div>
+                <button type="submit" class="btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <button class="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="site-nav">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </button>
+            <nav id="site-nav">
                 <ul>
-                    <li><a href="#" class="active" id="nav-home">Inicio</a></li>
-                    <li><a href="#" id="nav-add-game">Agregar Juego</a></li>
-                    <li><a href="#" id="nav-reviews">Reseñas</a></li>
+                    <li><a href="#home-section" class="active" id="nav-home">Inicio</a></li>
+                    <li><a href="#add-game-section" id="nav-add-game">Agregar Juego</a></li>
+                    <li><a href="#reviews-section" id="nav-reviews">Reseñas</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main class="container">
+        <!-- Hero visual -->
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-inner">
+                <div class="hero-grid">
+                    <div class="hero-text">
+                        <h2 class="hero-title">¡Bienvenido a tu Biblioteca Gamer!</h2>
+                        <p class="lead">Organiza, califica y comparte tu colección de videojuegos con estilo y facilidad.</p>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">15</span>
+                                <span class="stat-label">Juegos</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">4.5★</span>
+                                <span class="stat-label">Promedio</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">8</span>
+                                <span class="stat-label">Reseñas</span>
+                            </div>
+                        </div>
+                        <div class="hero-ctas">
+                            <a href="#home-section" class="btn-primary hero-btn">Ver mi colección</a>
+                            <a href="#add-game-section" class="btn-primary btn-outline hero-btn">Agregar juego</a>
+                        </div>
+                    </div>
+                    <div class="hero-visual" aria-hidden>
+                        <!-- SVG decorativo más grande y moderno -->
+                        <svg width="380" height="220" viewBox="0 0 380 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <radialGradient id="g2" cx="50%" cy="50%" r="60%">
+                                    <stop offset="0%" stop-color="#00d1c1" stop-opacity=".7"/>
+                                    <stop offset="100%" stop-color="#0f74ff" stop-opacity=".1"/>
+                                </radialGradient>
+                                <linearGradient id="g3" x1="0" x2="1">
+                                    <stop offset="0%" stop-color="#0f74ff" stop-opacity="1"/>
+                                    <stop offset="100%" stop-color="#00d1c1" stop-opacity="1"/>
+                                </linearGradient>
+                            </defs>
+                            <ellipse cx="190" cy="110" rx="170" ry="90" fill="url(#g2)" />
+                            <rect x="60" y="60" width="260" height="100" rx="24" fill="url(#g3)" opacity="0.13"/>
+                            <g transform="translate(120,90)">
+                                <rect x="0" y="0" width="80" height="40" rx="12" fill="#fff" opacity="0.18"/>
+                                <circle cx="20" cy="20" r="12" fill="#0f74ff" />
+                                <circle cx="60" cy="20" r="8" fill="#00d1c1" />
+                                <rect x="10" y="32" width="60" height="6" rx="3" fill="#0f74ff" opacity="0.18" />
+                            </g>
+                            <g transform="translate(220,140)">
+                                <circle cx="20" cy="20" r="16" fill="#0f74ff" opacity="0.13" />
+                                <circle cx="50" cy="20" r="16" fill="#00d1c1" opacity="0.13" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- Sección de inicio - Lista de juegos -->
         <section id="home-section" class="section active">
             <h2>Mi Colección de Juegos</h2>
-            <div class="search-bar">
+            <div class="search-bar fade-in-up">
                 <input type="text" id="search-games" placeholder="Buscar juegos...">
                 <button id="search-btn"><i class="fas fa-search"></i></button>
             </div>
-            <div class="filter-options">
+            <div class="filter-options fade-in-up">
                 <select id="filter-platform">
                     <option value="">Todas las plataformas</option>
                     <option value="PC">PC</option>

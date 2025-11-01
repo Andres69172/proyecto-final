@@ -1,3 +1,74 @@
+// Funcionalidad para editar nombre y avatar de usuario
+document.addEventListener('DOMContentLoaded', () => {
+    // Cargar datos guardados
+    const avatarImg = document.getElementById('avatar-img');
+    const usernameSpan = document.getElementById('username');
+    const userInfo = document.getElementById('user-info');
+    const userModal = document.getElementById('user-modal');
+    const closeUserModal = document.getElementById('close-user-modal');
+    const userForm = document.getElementById('user-form');
+    const editUsername = document.getElementById('edit-username');
+    const editAvatar = document.getElementById('edit-avatar');
+
+    // Inicializar con datos guardados
+    const savedName = localStorage.getItem('username');
+    const savedAvatar = localStorage.getItem('avatarUrl');
+    if (savedName) usernameSpan.textContent = savedName;
+    if (savedAvatar) avatarImg.src = savedAvatar;
+
+    // Abrir modal al hacer click en avatar o nombre
+    if (userInfo) {
+        userInfo.addEventListener('click', () => {
+            userModal.style.display = 'block';
+            editUsername.value = usernameSpan.textContent;
+            editAvatar.value = avatarImg.src;
+        });
+    }
+    // Cerrar modal
+    if (closeUserModal) {
+        closeUserModal.addEventListener('click', () => {
+            userModal.style.display = 'none';
+        });
+    }
+    // Guardar cambios
+    if (userForm) {
+        userForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newName = editUsername.value.trim();
+            const newAvatar = editAvatar.value.trim();
+            if (newName) {
+                usernameSpan.textContent = newName;
+                localStorage.setItem('username', newName);
+            }
+            if (newAvatar) {
+                avatarImg.src = newAvatar;
+                localStorage.setItem('avatarUrl', newAvatar);
+            }
+            userModal.style.display = 'none';
+        });
+    }
+    // Cerrar modal al hacer click fuera
+    window.addEventListener('click', (e) => {
+        if (e.target === userModal) userModal.style.display = 'none';
+    });
+});
+// Alternancia de tema claro/oscuro
+document.addEventListener('DOMContentLoaded', () => {
+    const themeBtn = document.getElementById('theme-toggle');
+    if (!themeBtn) return;
+    themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('light-mode');
+        // Cambia el icono
+        const icon = themeBtn.querySelector('i');
+        if (document.body.classList.contains('light-mode')) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+    });
+});
 // Base de datos local (simulada con localStorage)
 class GameDatabase {
     constructor() {
@@ -149,6 +220,65 @@ document.addEventListener('DOMContentLoaded', () => {
     const db = new GameDatabase();
     const app = new App(db);
     app.init();
+});
+
+// Menu hamburguesa: toggle del nav en móviles
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburger = document.querySelector('.hamburger');
+    const siteNav = document.getElementById('site-nav');
+    if (!hamburger || !siteNav) return;
+
+    hamburger.addEventListener('click', () => {
+        const isOpen = hamburger.classList.toggle('open');
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        siteNav.classList.toggle('show', isOpen);
+    });
+
+    // Navegación funcional: mostrar/ocultar secciones al hacer click en los enlaces
+    siteNav.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', (e) => {
+            e.preventDefault();
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', 'false');
+            siteNav.classList.remove('show');
+
+            // Navegación por id de sección
+            const href = a.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                const sectionId = href.slice(1);
+                document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+                const target = document.getElementById(sectionId);
+                if (target) target.classList.add('active');
+
+                // Marcar el enlace activo
+                siteNav.querySelectorAll('a').forEach(link => link.classList.remove('active'));
+                a.classList.add('active');
+            }
+        });
+    });
+});
+
+// Fallback robusto: escucha delegada por si el listener anterior no se adjunta
+// Esto permite que el toggle funcione aunque el elemento cambie o haya problemas de timing.
+document.addEventListener('click', (e) => {
+    const hb = e.target.closest && e.target.closest('.hamburger');
+    if (!hb) return;
+    const siteNav = document.getElementById('site-nav');
+    if (!siteNav) return;
+    const isOpen = hb.classList.toggle('open');
+    hb.setAttribute('aria-expanded', String(isOpen));
+    siteNav.classList.toggle('show', isOpen);
+});
+
+// Soporte de teclado (Enter/Space) para accesibilidad
+document.addEventListener('keydown', (e) => {
+    const active = document.activeElement;
+    if (!active) return;
+    if (!active.classList || !active.classList.contains('hamburger')) return;
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        active.click();
+    }
 });
 
 // Clase principal de la aplicación
@@ -338,12 +468,14 @@ class App {
             return;
         }
         
+        const placeholderImage = 'https://via.placeholder.com/600x400/0f1724/ffffff?text=Sin+Imagen';
+
         games.forEach(game => {
             const gameCard = document.createElement('div');
             gameCard.className = 'game-card';
             gameCard.setAttribute('data-id', game.id);
             
-            const defaultImage = 'https://via.placeholder.com/300x150?text=No+Image';
+            const defaultImage = game.image || placeholderImage;
             
             gameCard.innerHTML = `
                 <div class="game-image" style="background-image: url('${game.image || defaultImage}')"></div>
@@ -357,14 +489,40 @@ class App {
                         ${this.getStarRating(game.rating)}
                     </div>
                 </div>
+                <div class="card-overlay">
+                    <div class="overlay-actions">
+                        <button class="btn btn-view" data-action="view" data-id="${game.id}">Ver</button>
+                        <button class="btn btn-edit" data-action="edit" data-id="${game.id}">Editar</button>
+                    </div>
+                </div>
             `;
             
-            // Evento para mostrar detalles
-            gameCard.addEventListener('click', () => {
-                this.showGameDetails(game.id);
+            // Eventos para overlay buttons (evitar propagación)
+            gameCard.querySelectorAll('[data-action]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const action = btn.getAttribute('data-action');
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    if (action === 'view') this.showGameDetails(id);
+                    if (action === 'edit') {
+                        // Navegar a sección de editar: usaremos el formulario de agregar como placeholder
+                        alert('Función editar no implementada en la vista estática.');
+                    }
+                });
             });
+
+            // Mantener click en toda la tarjeta para ver detalles
+            gameCard.addEventListener('click', () => this.showGameDetails(game.id));
             
             this.gamesContainer.appendChild(gameCard);
+        });
+        // Añadir efecto de aparición escalonada
+        const cards = Array.from(this.gamesContainer.querySelectorAll('.game-card'));
+        cards.forEach((card, idx) => {
+            // pequeña demora según índice
+            setTimeout(() => {
+                card.classList.add('appear');
+            }, idx * 80);
         });
     }
     
